@@ -18,7 +18,8 @@ body {
 }
 
 main {
-
+    height: auto;
+    background-color: black;
 }
 
 main input{
@@ -32,10 +33,19 @@ main input{
     font-family: lcd;
     border: 1px solid yellow;
     border-radius:4px;
+    min-height: 10rem;
 }
 
 main section#keyBoard {
     /** Grid eller liknade */
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.5rem 0.1rem;
+}
+
+main button {
+    font-size: 3rem;
+    min-height: 5rem;
 }
 
 @media (max-width: 767px) {
