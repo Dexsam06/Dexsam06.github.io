@@ -4,6 +4,7 @@
  * önskar lösa problemen med andra metoder.
  */
 
+let resetLCD = false;
 let lcd = null; // displayen
 
 let memory = 0; // Lagrat/gamlat värdet från display
@@ -13,6 +14,12 @@ function init() {
     lcd = document.getElementById('lcd');
     let keyBoard = document.getElementById('keyBoard')
     keyBoard.onclick = buttonClick;
+    const buttons = document.getElementsByTagName('button')
+    for (let i = 0; i < buttons.length; i++) {
+        if (isNaN(buttons[i].innerText)) {
+            buttons[i].style.color = "blue";
+        }
+    }
 }
 
 /**
@@ -21,13 +28,31 @@ function init() {
 function buttonClick(e) {
     let btn = e.target.id; //id för den tangent som tryckte ner
 
-
     // kollar om siffertangent är nedtryckt
     if (btn.substring(0, 1) === 'b') {
         let digit = btn.substring(1, 2); // plockar ut siffran från id:et
-
+        addDigit(digit);
+        if (resetLCD) {
+            clearLCD();
+        }
     } else { // Inte en siffertangent, övriga tangenter.
-
+        memory = lcd.value;
+        clearLCD();
+        let operator = e.target.id;
+        switch (operator) {
+            case "comma":
+                addComma();
+                break;
+            case "enter":
+                calculate();
+                break;
+            case "clear":
+                memClear();
+                break;
+            default:
+                setOperator(operator);
+        }
+       
     }
 }
 
@@ -35,6 +60,7 @@ function buttonClick(e) {
  *  Lägger till siffra på display.
  */
 function addDigit(digit) {
+    lcd.value += digit;
 }
 
 /**
@@ -49,14 +75,41 @@ function addComma() {
  * +, -, *, /
  */
 function setOperator(operator){
-
+    switch (operator) {
+        case "add":
+            arithmetic = "+";
+            break;
+        case "sub":
+            arithmetic = "-";
+            break;
+        case "mul":
+            arithmetic = "*";
+            break;
+        case "div":
+            arithmetic = "/";
+            break;
+    }
 }
 
 /**
  * Beräknar ovh visar resultatet på displayen.
  */
 function calculate() {
+    switch (arithmetic) {
+        case "+":
+            lcd.value = (memory + lcd.value);
+            break;
+        case "-":
+            lcd.value = (memory - lcd.value);
+            break;
+        case "*":
+            lcd.value = (memory * lcd.value);
+            break;
+        case "/":
+            lcd.value = (memory / lcd.value);
+    }
 
+    arithmetic = null;
 }
 
 /** Rensar display */
