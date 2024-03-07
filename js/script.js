@@ -3,7 +3,7 @@
  * Det är helt fritt att ändra och ta bort kod om ni
  * önskar lösa problemen med andra metoder.
  */
-
+let isComma = null;
 let resetLCD = false;
 let lcd = null; // displayen
 
@@ -31,13 +31,12 @@ function buttonClick(e) {
     // kollar om siffertangent är nedtryckt
     if (btn.substring(0, 1) === 'b') {
         let digit = btn.substring(1, 2); // plockar ut siffran från id:et
-        addDigit(digit);
         if (resetLCD) {
             clearLCD();
         }
+        addDigit(digit);
+        resetLCD = false;
     } else { // Inte en siffertangent, övriga tangenter.
-        memory = lcd.value;
-        clearLCD();
         let operator = e.target.id;
         switch (operator) {
             case "comma":
@@ -51,6 +50,8 @@ function buttonClick(e) {
                 break;
             default:
                 setOperator(operator);
+                memory = lcd.value;
+                resetLCD = true;
         }
        
     }
@@ -67,6 +68,7 @@ function addDigit(digit) {
  * Lägger till decimaltecken
  */
 function addComma() {
+    
 
 }
 
@@ -75,20 +77,7 @@ function addComma() {
  * +, -, *, /
  */
 function setOperator(operator){
-    switch (operator) {
-        case "add":
-            arithmetic = "+";
-            break;
-        case "sub":
-            arithmetic = "-";
-            break;
-        case "mul":
-            arithmetic = "*";
-            break;
-        case "div":
-            arithmetic = "/";
-            break;
-    }
+    arithmetic = operator;
 }
 
 /**
@@ -96,26 +85,27 @@ function setOperator(operator){
  */
 function calculate() {
     switch (arithmetic) {
-        case "+":
-            lcd.value = (memory + lcd.value);
+        case "add":
+            lcd.value = Number(memory) + Number(lcd.value);
             break;
-        case "-":
-            lcd.value = (memory - lcd.value);
+        case "sub":
+            lcd.value = Number(memory) - Number(lcd.value);
             break;
-        case "*":
-            lcd.value = (memory * lcd.value);
+        case "mul":
+            lcd.value = Number(memory) * Number(lcd.value);
             break;
-        case "/":
-            lcd.value = (memory / lcd.value);
+        case "div":
+            lcd.value = Number(memory) / Number(lcd.value);
     }
 
-    arithmetic = null;
+    resetLCD = false;
 }
 
 /** Rensar display */
 function clearLCD() {
     lcd.value = '';
     isComma = false;
+    resetLCD = false;
 }
 
 /** Rensar allt, reset */
