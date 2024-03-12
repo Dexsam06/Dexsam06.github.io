@@ -50,6 +50,11 @@ main section#keyBoard {
 main button {
     font-size: 3rem;
     min-height: 7rem;
+    font-weight: 500;
+}
+
+main button:hover {
+    color: green;
 }
 
 @media (max-width: 767px) {

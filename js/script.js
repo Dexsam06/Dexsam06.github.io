@@ -3,8 +3,6 @@
  * Det är helt fritt att ändra och ta bort kod om ni
  * önskar lösa problemen med andra metoder.
  */
-let isComma = null;
-let isSubsuquent = false;
 let resetLCD = false;
 let lcd = null; // displayen
 
@@ -51,30 +49,7 @@ function buttonClick(e) {
                 break;
             default:
                 setOperator(operator);
-                if (isSubsuquent) {
-                    switch (operator) {
-                        case "add":
-                            memory = Number(memory) + Number(lcd.value);
-                            lcd.value = memory;
-                            break;
-                        case "sub":
-                            memory = Number(memory) - Number(lcd.value);
-                            lcd.value = memory;
-                            break;
-                        case "mul":
-                            memory = Number(memory) * Number(lcd.value);
-                            lcd.value = memory;
-                            break;
-                        case "div":
-                            memory = Number(memory) / Number(lcd.value);
-                            lcd.value = memory;
-                    }
-                }
-                else {
-                    memory = lcd.value;
-                    isSubsuquent = true;
-                }
-                
+                memory = lcd.value;
                 resetLCD = true;
         }
     }
@@ -127,7 +102,6 @@ function calculate() {
 /** Rensar display */
 function clearLCD() {
     lcd.value = '';
-    isComma = false;
     resetLCD = false;
 }
 
@@ -135,7 +109,6 @@ function clearLCD() {
 function memClear(){
     memory = 0;
     arithmetic = null;
-    isSubsuquent = false;
     clearLCD();
 }
 
