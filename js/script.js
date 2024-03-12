@@ -4,6 +4,7 @@
  * önskar lösa problemen med andra metoder.
  */
 let isComma = null;
+let isSubsuquent = false;
 let resetLCD = false;
 let lcd = null; // displayen
 
@@ -50,10 +51,32 @@ function buttonClick(e) {
                 break;
             default:
                 setOperator(operator);
-                memory = lcd.value;
+                if (isSubsuquent) {
+                    switch (operator) {
+                        case "add":
+                            memory = Number(memory) + Number(lcd.value);
+                            lcd.value = memory;
+                            break;
+                        case "sub":
+                            memory = Number(memory) - Number(lcd.value);
+                            lcd.value = memory;
+                            break;
+                        case "mul":
+                            memory = Number(memory) * Number(lcd.value);
+                            lcd.value = memory;
+                            break;
+                        case "div":
+                            memory = Number(memory) / Number(lcd.value);
+                            lcd.value = memory;
+                    }
+                }
+                else {
+                    memory = lcd.value;
+                    isSubsuquent = true;
+                }
+                
                 resetLCD = true;
         }
-       
     }
 }
 
@@ -68,7 +91,7 @@ function addDigit(digit) {
  * Lägger till decimaltecken
  */
 function addComma() {
-    
+    lcd.value += '.';
 
 }
 
@@ -112,6 +135,7 @@ function clearLCD() {
 function memClear(){
     memory = 0;
     arithmetic = null;
+    isSubsuquent = false;
     clearLCD();
 }
 
