@@ -1,13 +1,36 @@
-/**
- * Se detta som en grund att utgå ifrån.
- * Det är helt fritt att ändra och ta bort kod om ni
- * önskar lösa problemen med andra metoder.
- */
 let resetLCD = false;
 let lcd = null; // displayen
-
+let noComma = true;
 let memory = 0; // Lagrat/gamlat värdet från display
 let arithmetic = null; // Vilken beräkning som skall göras +,-, x eller /
+
+for (let i = 0; i < 5; i++) {
+    document.write('<div class="square"></div>');
+    document.write('<div class="circle"></div>');
+    document.write('<div class="triangle"></div>');
+}
+
+function randomValues() {
+    anime({
+        targets: '.square, .circle, .triangle',
+        translateX: function () {
+            return anime.random(-500, 500);
+        },
+        translateY: function () {
+            return anime.random(-300, 300);
+        },
+        rotate: function () {
+            return anime.random(0, 360);
+        },
+        scale: function () {
+            return anime.random(.2, 2);
+        },
+        duration: 1000,
+        easing: 'easeInOutQuad',
+        complete: randomValues,
+    });
+}
+
 
 function init() {
     lcd = document.getElementById('lcd');
@@ -19,6 +42,7 @@ function init() {
             buttons[i].style.color = "blue";
         }
     }
+    randomValues();
 }
 
 /**
@@ -46,10 +70,12 @@ function buttonClick(e) {
                 break;
             case "clear":
                 memClear();
+                noComma = true;
                 break;
             default:
                 setOperator(operator);
                 memory = lcd.value;
+                noComma = true;
                 resetLCD = true;
         }
     }
@@ -66,15 +92,17 @@ function addDigit(digit) {
  * Lägger till decimaltecken
  */
 function addComma() {
-    lcd.value += '.';
-
+    if (noComma) {
+        lcd.value += '.';
+        noComma = false;
+    }
 }
 
 /**
  * Sparar operator.
  * +, -, *, /
  */
-function setOperator(operator){
+function setOperator(operator) {
     arithmetic = operator;
 }
 
@@ -106,7 +134,7 @@ function clearLCD() {
 }
 
 /** Rensar allt, reset */
-function memClear(){
+function memClear() {
     memory = 0;
     arithmetic = null;
     clearLCD();
