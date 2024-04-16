@@ -4,13 +4,6 @@ let noComma = true;
 let memory = 0; // Lagrat/gamlat värdet från display
 let arithmetic = null; // Vilken beräkning som skall göras +,-, x eller /
 
-let width = window.innerWidth;
-window.onresize = resize;
-
-function resize() {
-    
-}
-
 for (let i = 0; i < 5; i++) {
     document.write('<div class="square"></div>');
     document.write('<div class="circle"></div>');
@@ -109,7 +102,6 @@ function addComma() {
  * +, -, *, /
  */
 function setOperator(operator) {
-    calculate();
     arithmetic = operator;
 }
 
