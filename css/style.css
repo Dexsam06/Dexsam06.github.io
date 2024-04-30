@@ -10,6 +10,13 @@
     src: url(../font/SUBWT___.ttf);
 }
 
+input[disabled] {
+    -webkit-text-fill-color: rgba(0, 255, 0, 1);
+    opacity: 1;
+    -webkit-opacity: 1;
+    color: rgba(0, 255, 0, 1)
+}
+
 html {
     font-size: 62.5%;
     min-height: 100vh;
@@ -37,10 +44,10 @@ main input {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
     background-color: black;
-    color: #ffff00;
+    color: green;
     text-align: right;
     padding: 2rem 0.4rem 2rem 0.4rem;
-    font-family: sans-serif;
+    font-family: lcd;
     border: 0.1rem solid yellow;
     border-radius: 0.4rem;
     min-height: auto;
