@@ -15,6 +15,7 @@ function init() {
             buttons[i].style.color = "blue";
         }
     }
+    randomValues();
 }
 
 /**
