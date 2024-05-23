@@ -4,6 +4,11 @@ let noComma = true;
 let memory = 0; // Lagrat/gamlat värdet från display
 let arithmetic = null; // Vilken beräkning som skall göras +,-, x eller /
 
+for (let i = 0; i < 5; i++) {
+    document.write('<div class="square"></div>');
+    document.write('<div class="circle"></div>');
+    document.write('<div class="triangle"></div>');
+}
 
 function init() {
     lcd = document.getElementById('lcd');
@@ -15,7 +20,11 @@ function init() {
             buttons[i].style.color = "blue";
         }
     }
-    randomValues();
+    const width = screen.width;
+    console.log(width);
+    if(Number(width) > Number(1000)) {
+        randomValues();
+    }
 }
 
 /**
@@ -114,13 +123,6 @@ function memClear() {
 }
 
 window.onload = init;
-
-
-for (let i = 0; i < 5; i++) {
-    document.write('<div class="square"></div>');
-    document.write('<div class="circle"></div>');
-    document.write('<div class="triangle"></div>');
-}
 
 function randomValues() {
     anime({
